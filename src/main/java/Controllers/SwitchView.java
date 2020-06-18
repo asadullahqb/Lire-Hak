@@ -32,18 +32,4 @@ public class SwitchView {
         }
         return view;
     }
-
-//    public Pane getPane(String fileName) {
-//        try {
-//            URL fileUrl = Main.class.getResource("/resources/" + fileName + ".fxml");
-//            if (fileUrl == null) {
-//                throw new java.io.FileNotFoundException("File not found.");
-//            }
-//            view = new FXMLLoader().load(fileUrl);
-//
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-//        return view;
-//    }
 }
