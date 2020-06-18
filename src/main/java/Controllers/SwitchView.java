@@ -1,4 +1,4 @@
-package App;
+package Controllers;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
@@ -18,13 +18,13 @@ public class SwitchView {
         try {
             switch(pane) {
                 case INDEX:
-                    view = FXMLLoader.load((getClass().getClassLoader().getResource("Indexing.fxml")));
+                    view = FXMLLoader.load((getClass().getClassLoader().getResource("IndexView.fxml")));
                     break;
                 case QUERY:
-                    view = FXMLLoader.load((getClass().getClassLoader().getResource("Query.fxml")));
+                    view = FXMLLoader.load((getClass().getClassLoader().getResource("QueryView.fxml")));
                     break;
                 case SIMILAR:
-                    view = FXMLLoader.load((getClass().getClassLoader().getResource("Similar.fxml")));
+                    view = FXMLLoader.load((getClass().getClassLoader().getResource("MatchView.fxml")));
                     break;
             }
         } catch (Exception e) {

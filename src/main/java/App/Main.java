@@ -31,7 +31,7 @@ public class Main extends Application {
             closeProgram();
         });
 
-        window.setScene(new Scene(root));
+        window.setScene(new Scene(root, 700, 600));
         window.show();
     }
 
