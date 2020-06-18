@@ -1,10 +1,7 @@
-package Controllers;
+package ViewControllers;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
-
-import java.net.URL;
-import java.util.Objects;
 
 public class SwitchView {
     private Pane view;

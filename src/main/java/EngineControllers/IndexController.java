@@ -1,28 +1,17 @@
-package Controllers;
+package EngineControllers;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.SubScene;
 import javafx.scene.control.*;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import net.semanticmetadata.lire.builders.GlobalDocumentBuilder;
-import net.semanticmetadata.lire.imageanalysis.features.global.*;
-import net.semanticmetadata.lire.indexers.parallel.ParallelIndexer;
 import net.semanticmetadata.lire.utils.FileUtils;
-import net.semanticmetadata.lire.utils.LuceneUtils;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.index.IndexWriter;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;

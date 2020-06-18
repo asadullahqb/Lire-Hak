@@ -1,5 +1,6 @@
-package Controllers;
+package ViewControllers;
 
+import EngineControllers.IndexController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,9 +28,9 @@ public class SideBarController implements Initializable {
 
     @FXML
     private void queryBtn(ActionEvent event) {
-        System.out.println("Query pane is clicked.");
+        System.out.println("QueryController pane is clicked.");
         Pane v = switchView.getPane(SwitchView.CurrentPane.QUERY);
-//        Pane v = switchView.getPane("Query");
+//        Pane v = switchView.getPane("QueryController");
         mainPane.setCenter(v);
     }
 
