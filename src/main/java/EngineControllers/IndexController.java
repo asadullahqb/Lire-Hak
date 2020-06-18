@@ -77,12 +77,12 @@ public class IndexController implements Initializable {
     }
 
     public void Indexing() {
-        bgThread = new Service<String>() {
+        Service<String> bgThread = new Service<String>() {
             @Override
             protected Task<String> createTask()  {
-                final String path = filePath.getText();
                 return new Task<String>() {
                     StringBuilder results = new StringBuilder();
+                    final String path = filePath.getText();
                     @Override
                     public String call() throws IOException, InterruptedException {
                         System.out.println("Path to folder: " + path);
