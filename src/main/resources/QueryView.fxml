@@ -8,15 +8,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EngineControllers.QueryController">
+<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EngineControllers.QueryController">
    <children>
       <Label layoutX="40.0" layoutY="14.0" prefHeight="26.0" prefWidth="200.0" text="Query Index Images">
          <font>
             <Font size="17.0" />
          </font></Label>
       <TextField fx:id="imgPath" editable="false" layoutX="40.0" layoutY="50.0" prefHeight="25.0" prefWidth="381.0" />
-      <Button fx:id="chooseImgBtn" layoutX="429.0" layoutY="50.0" mnemonicParsing="false" onAction="#chooseImg" prefHeight="25.0" prefWidth="136.0" text="Choose Image..." />
-      <ImageView fitHeight="280.0" fitWidth="381.0" layoutX="185.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true" />
-      <TextArea fx:id="testOutput" layoutX="40.0" layoutY="89.0" prefHeight="280.0" prefWidth="136.0" />
+      <Button fx:id="chooseImgBtn" layoutX="430.0" layoutY="50.0" mnemonicParsing="false" onAction="#chooseImg" prefHeight="25.0" prefWidth="136.0" text="Choose Image..." />
+      <ImageView fitHeight="345.0" fitWidth="527.0" layoutX="40.0" layoutY="237.0" pickOnBounds="true" preserveRatio="true" />
+      <TextArea fx:id="testOutput" layoutX="40.0" layoutY="145.0" prefHeight="79.0" prefWidth="527.0" />
+      <Button layoutX="40.0" layoutY="86.0" mnemonicParsing="false" onAction="#startQuery" text="Start Query" />
+      <Label layoutX="40.0" layoutY="122.0" text="Matched Query Results:" />
    </children>
 </AnchorPane>
