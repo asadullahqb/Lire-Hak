@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class Similar implements Initializable {
+public class MatchController implements Initializable {
     Stage window;
     private volatile Service<String> bgThread;
     private final List<String> imageArray = new ArrayList<>();
