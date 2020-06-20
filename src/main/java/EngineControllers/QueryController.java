@@ -1,5 +1,6 @@
 package EngineControllers;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
@@ -39,25 +40,20 @@ public class QueryController implements Initializable {
     private final List<String> imageArray = new ArrayList<>();
 
     int count = 0;
-    private int nRows = 3;
-    private int nCols = 3;
-    private static final double ELEMENT_SIZE = 100;
+    private static final double ELEMENT_SIZE = 65.875;
     private static final double GAP = ELEMENT_SIZE / 10;
 
     @FXML
-    private Button chooseImgBtn;
-
-    @FXML
     private TextField imgPath;
-
-    @FXML
-    private TextArea testOutput;
 
     @FXML
     private ProgressBar queryProgressBar;
 
     @FXML
     private TilePane tilePane;
+
+    @FXML
+    private Button startQueryBtn;
 
     @FXML
     public void chooseImg() {
@@ -68,6 +64,7 @@ public class QueryController implements Initializable {
         else {
             System.out.println(file.getAbsolutePath());
             imgPath.setText(file.getAbsolutePath());
+            startQueryBtn.setDisable(false);
         }
     }
 
@@ -80,17 +77,11 @@ public class QueryController implements Initializable {
          }
     }
 
-    @FXML
-    private void loadImages() {
-        createElements();
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        tilePane.setPrefColumns(nCols);
-//        tilePane.setPrefRows(nRows);
         tilePane.setHgap(GAP);
         tilePane.setVgap(GAP);
+        startQueryBtn.setDisable(true);
     }
 
     public void Searching() {
@@ -98,9 +89,7 @@ public class QueryController implements Initializable {
             @Override
             protected Task<String> createTask() {
                 return new Task<String>() {
-                    StringBuilder results = new StringBuilder();
                     final String path = imgPath.getText();
-
                     @Override
                     protected String call() throws Exception {
                         BufferedImage img = null;
@@ -122,43 +111,31 @@ public class QueryController implements Initializable {
                             String fileName = ir.document(hits.documentID(i)).getValues(DocumentBuilder.FIELD_NAME_IDENTIFIER)[0];
                             System.out.println(hits.score(i) + ": \t" + fileName);
                             imageArray.add(fileName);
-                            results.append(hits.score(i) + ": \t" + fileName + "\n");
-                            updateValue(results.toString());
                             Thread.sleep(50);
                         }
-
-                        updateValue(results.toString());
-
-                        updateProgress(100, 100);
-                        results.append("Finished Querying Matched Images. ");
-                        return results.toString();
+                        try {
+                            Platform.runLater(() -> {
+                                createElements();
+                                updateProgress(100, 100);
+                                startQueryBtn.setDisable(true);
+                            });
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
+                        return null;
                     }
                 };
             }
         };
-        testOutput.textProperty().bind(bgThread.valueProperty());
-        testOutput.textProperty().addListener(new ChangeListener<Object>() {
-            @Override
-            public void changed(ObservableValue<?> observable, Object oldValue,
-                                Object newValue) {
-                testOutput.setScrollTop(Double.MIN_VALUE);
-            }
-        });
         queryProgressBar.progressProperty().bind(bgThread.progressProperty());
         bgThread.start();
     }
 
     // For image loading
     private void createElements() {
-
-        // TODO: Display all images in an array instead.
-        tilePane.getChildren().clear();
-        int colCalc = imageArray.size();
-        for (int i = 0; i < nCols; i++) {
-            for (int j = 0; j < nRows; j++) {
+        for (int i = 0; i < imageArray.size(); i++) {
                 tilePane.getChildren().add(createPage(count));
                 count++;
-            }
         }
     }
 
