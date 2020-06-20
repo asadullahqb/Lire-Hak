@@ -10,6 +10,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.Objects;
 
 public class Main extends Application {
     Stage window;
@@ -21,7 +22,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("App.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("App.fxml")));
         window = primaryStage;
         window.setTitle("DonutRanger");
 
@@ -29,22 +30,8 @@ public class Main extends Application {
             event.consume();
             closeProgram();
         });
-//
-//        closeButton = new Button("Close Program");
-//        fileButton = new Button("Choose image folder");
-//
-//        closeButton.setOnAction(event -> closeProgram());
-//        fileButton.setOnAction(event -> chooseFile());
-//
-//        StackPane layout = new StackPane(new HBox(
-//            fileButton,
-//            closeButton
-//        ));
-//        // layout.getChildren().addAll(fileButton, closeButton);
-//        Scene scene = new Scene(layout, 300, 250);
-//        scene.getStylesheets().add("Theme.scss");
-//        window.setScene(scene);
-        window.setScene(new Scene(root));
+
+        window.setScene(new Scene(root, 700, 600));
         window.show();
     }
 
