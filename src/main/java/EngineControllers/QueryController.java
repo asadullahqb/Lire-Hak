@@ -40,7 +40,8 @@ public class QueryController implements Initializable {
     private final List<String> imageArray = new ArrayList<>();
 
     int count = 0;
-    private static final double ELEMENT_SIZE = 65.875;
+    // NOTE: Divide 925 by the desired row to get ELEMENT_SIZE
+    private static final double ELEMENT_SIZE = 102.7;
     private static final double GAP = ELEMENT_SIZE / 10;
 
     @FXML
@@ -62,7 +63,7 @@ public class QueryController implements Initializable {
         if (file == null)
             System.out.println("No file chosen.");
         else {
-            System.out.println(file.getAbsolutePath());
+//            System.out.println(file.getAbsolutePath());
             imgPath.setText(file.getAbsolutePath());
             startQueryBtn.setDisable(false);
         }
@@ -109,7 +110,7 @@ public class QueryController implements Initializable {
 
                         for (int i = 0; i < hits.length(); i++) {
                             String fileName = ir.document(hits.documentID(i)).getValues(DocumentBuilder.FIELD_NAME_IDENTIFIER)[0];
-                            System.out.println(hits.score(i) + ": \t" + fileName);
+//                            System.out.println(hits.score(i) + ": \t" + fileName);
                             imageArray.add(fileName);
                             Thread.sleep(50);
                         }
@@ -141,7 +142,7 @@ public class QueryController implements Initializable {
 
     // TODO: Image array
     public VBox createPage(int index) {
-        System.out.println(imageArray.get(index));
+//        System.out.println(imageArray.get(index));
         ImageView imageView = new ImageView();
         File file = new File(imageArray.get(index));
         try {
