@@ -117,7 +117,9 @@ public class IndexController implements Initializable {
                                 try {
                                     // Write indexed image features.
                                     BufferedImage img = ImageIO.read(new FileInputStream(imageFilePath));
-                                    Document document = globalDocumentBuilder.createDocument(img, imageFilePath);
+                                    BufferedImage newimg = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_RGB);
+                                    newimg.createGraphics().drawImage(img, 0, 0, img.getWidth(), img.getHeight(), null);
+                                    Document document = globalDocumentBuilder.createDocument(newimg, imageFilePath);
                                     indexField.add(document);
                                 } catch (Exception e) {
                                     System.err.println("Error reading image or indexing it.");
