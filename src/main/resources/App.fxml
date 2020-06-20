@@ -20,6 +20,10 @@
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin></Button>
+                  <Button mnemonicParsing="false" onAction="#similarBtn" prefHeight="36.0" prefWidth="124.0" text="Similarity Matching">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </VBox.margin></Button>
                </children>
             </VBox>
          </left>
