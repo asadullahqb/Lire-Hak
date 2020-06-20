@@ -1,6 +1,5 @@
 package EngineControllers;
 
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
@@ -13,11 +12,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.Dragboard;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
-import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import net.semanticmetadata.lire.builders.DocumentBuilder;
@@ -28,11 +24,8 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.store.FSDirectory;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -87,9 +80,17 @@ public class QueryController implements Initializable {
          }
     }
 
+    @FXML
+    private void loadImages() {
+        createElements();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        tilePane.setPrefColumns(nCols);
+//        tilePane.setPrefRows(nRows);
+        tilePane.setHgap(GAP);
+        tilePane.setVgap(GAP);
     }
 
     public void Searching() {
@@ -126,9 +127,10 @@ public class QueryController implements Initializable {
                             Thread.sleep(50);
                         }
 
-                        results.append("Finished Querying Matched Images.");
+                        updateValue(results.toString());
+
                         updateProgress(100, 100);
-                        outputImages();
+                        results.append("Finished Querying Matched Images. ");
                         return results.toString();
                     }
                 };
@@ -146,64 +148,43 @@ public class QueryController implements Initializable {
         bgThread.start();
     }
 
-    private void handleDragDropped(DragEvent event){
-        Dragboard db = event.getDragboard();
-        File file = db.getFiles().get(0);
+    // For image loading
+    private void createElements() {
+
+        // TODO: Display all images in an array instead.
+        tilePane.getChildren().clear();
+        int colCalc = imageArray.size();
+        for (int i = 0; i < nCols; i++) {
+            for (int j = 0; j < nRows; j++) {
+                tilePane.getChildren().add(createPage(count));
+                count++;
+            }
+        }
     }
 
-    public void outputImages() throws FileNotFoundException {
-//        imagePagination.setMaxPageIndicatorCount(imageArray.size());
-//
-//        Platform.runLater(() -> {
-//            imagePagination.setPageFactory(n -> new ImageView(imageArray.get(n)));
-//        });
-//        try {
-//            imagePagination.setPageFactory(n -> new ImageView(imageArray.get(n)));
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-//        imagePagination.setPageFactory(n -> new ImageView(imageArray.get(n)));
-
-//        for (String path: imageArray) {
-////            FileInputStream input = new FileInputStream(path);
-////            Image img = new Image(input);
-//            System.out.println(path);
-//            try {
-//                imagePagination.setPageFactory(n -> new ImageView(path));
-//            } catch (Exception e) {
-//                System.out.println(e);
-//            }
-//        }
-
-        for (int i = 0; i < 4; i++) {
-            FileInputStream input =  new FileInputStream(imageArray.get(0));
-            Image img = new Image(input);
-//            imgView1.setImage(img);
+    // TODO: Image array
+    public VBox createPage(int index) {
+        System.out.println(imageArray.get(index));
+        ImageView imageView = new ImageView();
+        File file = new File(imageArray.get(index));
+        try {
+            BufferedImage bufferedImage = ImageIO.read(file);
+            Image image = new Image(file.toURI().toString());
+            imageView.setImage(image);
+            imageView.setFitHeight(ELEMENT_SIZE);
+            imageView.setFitWidth(ELEMENT_SIZE);
+            imageView.setSmooth(true);
+            imageView.setCache(true);
+        } catch (IOException e) {
+            System.out.println(e);
         }
 
+        VBox pageBox = new VBox();
+        pageBox.getChildren().add(imageView);
+        pageBox.setStyle("-fx-border-color: #383838");
 
+        // Destroy
+        imageView = null;
+        return pageBox;
     }
-
-    // For image loading
-//    private void createElements() {
-//        tilePane.getChildren().clear();
-//        for (int i = 0; i < nCols; i++) {
-//            for (int j = 0; j < nRows; j++) {
-//                tilePane.getChildren().add(createPage(count));
-//                count++;
-//            }
-//        }
-//    }
-
-    //        TODO: Image array
-//    public VBox createPage(int index) {
-//        ImageView imageView = new ImageView();
-////        File file = imageArray;
-//        for (File path: imageArray
-//             ) {
-//
-//        }
-//        File f = new File(path);
-//
-//    }
 }
