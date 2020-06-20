@@ -33,6 +33,14 @@ public class SideBarController implements Initializable {
 //        Pane v = switchView.getPane("QueryController");
         mainPane.setCenter(v);
     }
+    
+    @FXML
+    private void similarBtn(ActionEvent event) {
+        System.out.println("FeatureSimilarity pane is clicked.");
+        Pane v = switchView.getPane(SwitchView.CurrentPane.SIMILAR);
+//        Pane v = switchView.getPane("QueryController");
+        mainPane.setCenter(v);
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
