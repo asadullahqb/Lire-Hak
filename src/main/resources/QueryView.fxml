@@ -20,9 +20,8 @@
       <TextArea fx:id="testOutput" layoutX="40.0" layoutY="162.0" prefHeight="47.0" prefWidth="527.0" />
       <Button layoutX="40.0" layoutY="86.0" mnemonicParsing="false" onAction="#startQuery" text="Start Query" />
       <Label layoutX="40.0" layoutY="144.0" text="Matched Query Results:" />
-      <TilePane fx:id="tilePane" layoutX="40.0" layoutY="221.0" prefHeight="331.0" prefWidth="527.0" />
-      <Button layoutX="304.0" layoutY="561.0" mnemonicParsing="false" text="Next" />
-      <Button layoutX="261.0" layoutY="561.0" mnemonicParsing="false" text="Prev" />
+      <Button layoutX="220.0" layoutY="221.0" mnemonicParsing="false" onAction="#loadImages" prefHeight="25.0" prefWidth="161.0" text="Load Query Images" />
       <ProgressBar fx:id="queryProgressBar" layoutX="40.0" layoutY="119.0" prefHeight="18.0" prefWidth="527.0" progress="0.0" />
+      <TilePane fx:id="tilePane" layoutX="37.0" layoutY="255.0" prefHeight="331.0" prefWidth="527.0" />
    </children>
 </AnchorPane>
