@@ -138,20 +138,31 @@ public class MatchController implements Initializable {
         catch (Exception e) { System.err.println(e); }
     }
 
-    // TODO: Fix this.
     @FXML
-    private void image1DragOver(DragEvent e) {
+    private void imageDragOver(DragEvent e) {
         if (e.getDragboard().hasFiles()) {
             e.acceptTransferModes(TransferMode.ANY);
         }
     }
 
     @FXML
-    private void image1DropHandler(DragEvent e) throws FileNotFoundException {
+    private void image1DropHandler(DragEvent e) {
+        try { setImgOnDrop(e, 1); } catch (Exception ex) { System.err.println(ex); }
+    }
+
+    @FXML
+    private void image2DropHandler(DragEvent e) {
+        try { setImgOnDrop(e, 2); } catch (Exception ex) { System.err.println(ex); }
+    }
+
+    private void setImgOnDrop(DragEvent e, int dex) throws FileNotFoundException {
         List<File> file = e.getDragboard().getFiles();
         Image img = new Image(new FileInputStream(file.get(0)));
-        imgPath1.setText(file.get(0).toString());
-        firstImage.setImage(img);
+        switch (dex) {
+            case 1: imgPath1.setText(file.get(0).toString()); firstImage.setImage(img); break;
+            case 2: imgPath2.setText(file.get(0).toString()); secondImage.setImage(img); break;
+        }
+        startCalcBtn.setDisable(imgPath1.getText().isEmpty() || imgPath2.getText().isEmpty());
     }
 
     @Override
