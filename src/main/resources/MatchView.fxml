@@ -18,9 +18,9 @@
          <font>
             <Font size="17.0" />
          </font></Label>
-      <TextField fx:id="imgPath1" editable="false" layoutX="40.0" layoutY="53.0" prefHeight="25.0" prefWidth="454.0" />
+      <TextField fx:id="imgPath1" focusTraversable="false" promptText="No image selected." editable="false" layoutX="40.0" layoutY="53.0" prefHeight="25.0" prefWidth="454.0" />
       <Button fx:id="chooseImgBtn1" layoutX="180.0" layoutY="91.0" mnemonicParsing="false" onAction="#btnOneHandler" prefHeight="25.0" prefWidth="174.0" text="Choose Image" />
-      <TextField fx:id="imgPath2" editable="false" layoutX="506.0" layoutY="53.0" prefHeight="25.0" prefWidth="454.0" />
+      <TextField fx:id="imgPath2" focusTraversable="false" promptText="No image selected." editable="false" layoutX="506.0" layoutY="53.0" prefHeight="25.0" prefWidth="454.0" />
       <Button fx:id="chooseImgBtn2" layoutX="646.0" layoutY="91.0" mnemonicParsing="false" onAction="#btnTwoHandler" prefHeight="25.0" prefWidth="174.0" text="Choose Image" />
       <Button fx:id="startCalcBtn" layoutX="380.0" layoutY="462.0" mnemonicParsing="false" onAction="#startCalc" prefHeight="25.0" prefWidth="240.0" text="Calculate Similarity" />
       <ComboBox fx:id="FeatureSelector" layoutX="700.0" layoutY="462.0">

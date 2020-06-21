@@ -4,6 +4,7 @@ import EngineControllers.IndexController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
@@ -17,10 +18,26 @@ public class SideBarController implements Initializable {
     @FXML
     private BorderPane mainPane;
 
+    @FXML
+    private Button indexButtonId;
+
+    @FXML
+    private Button queryButtonId;
+
+    @FXML
+    private Button similarButtonId;
+
 
     @FXML
     private void indexBtn(ActionEvent event) {
         System.out.println("Indexing pane is clicked.");
+
+        //Set only this button disabled.
+        indexButtonId.setDisable(true);
+        queryButtonId.setDisable(false);
+        similarButtonId.setDisable(false);
+
+
         Pane v = switchView.getPane(SwitchView.CurrentPane.INDEX);
 //        Pane v = switchView.getPane("Indexing");
         mainPane.setCenter(v);
@@ -29,6 +46,12 @@ public class SideBarController implements Initializable {
     @FXML
     private void queryBtn(ActionEvent event) {
         System.out.println("QueryController pane is clicked.");
+
+        //Set only this button disabled.
+        indexButtonId.setDisable(false);
+        queryButtonId.setDisable(true);
+        similarButtonId.setDisable(false);
+
         Pane v = switchView.getPane(SwitchView.CurrentPane.QUERY);
 //        Pane v = switchView.getPane("QueryController");
         mainPane.setCenter(v);
@@ -37,6 +60,12 @@ public class SideBarController implements Initializable {
     @FXML
     private void similarBtn(ActionEvent event) {
         System.out.println("FeatureSimilarity pane is clicked.");
+
+        //Set only this button disabled.
+        indexButtonId.setDisable(false);
+        queryButtonId.setDisable(false);
+        similarButtonId.setDisable(true);
+
         Pane v = switchView.getPane(SwitchView.CurrentPane.SIMILAR);
 //        Pane v = switchView.getPane("QueryController");
         mainPane.setCenter(v);
@@ -45,6 +74,14 @@ public class SideBarController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Application started.");
+
+        //Set only index button disabled.
+        indexButtonId.setDisable(true);
+        queryButtonId.setDisable(false);
+        similarButtonId.setDisable(false);
+
+        Pane v = switchView.getPane(SwitchView.CurrentPane.INDEX); //Set default view.
+        mainPane.setCenter(v);
     }
 
 

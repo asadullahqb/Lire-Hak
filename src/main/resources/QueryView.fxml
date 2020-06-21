@@ -17,7 +17,7 @@
          <font>
             <Font size="17.0" />
          </font></Label>
-      <TextField fx:id="imgPath" editable="false" layoutX="40.0" layoutY="50.0" prefHeight="25.0" prefWidth="777.0" />
+      <TextField fx:id="imgPath" promptText="No image selected." focusTraversable="false" editable="false" layoutX="40.0" layoutY="50.0" prefHeight="25.0" prefWidth="777.0" />
       <Button fx:id="chooseImgBtn" layoutX="829.0" layoutY="50.0" mnemonicParsing="false" onAction="#chooseImg" prefHeight="25.0" prefWidth="136.0" text="Choose Image..." />
       <Button fx:id="startQueryBtn" layoutX="411.0" layoutY="84.0" mnemonicParsing="false" onAction="#startQuery" prefHeight="25.0" prefWidth="183.0" text="Begin Querying Images" />
       <ComboBox fx:id="FeatureSelector" layoutX="700.0" layoutY="84.0">
@@ -30,6 +30,7 @@
          </items>
       </ComboBox>
       <ProgressBar fx:id="queryProgressBar" layoutX="40.0" layoutY="115.0" prefHeight="19.0" prefWidth="925.0" progress="0.0" />
-      <TilePane fx:id="tilePane" layoutX="40.0" layoutY="141.0" prefHeight="452.0" prefWidth="925.0" />
+      <Label text="Results:" layoutX="40.0" layoutY="141.0" prefHeight="20"/>
+      <TilePane fx:id="tilePane" layoutX="40.0" layoutY="166.0" prefHeight="452.0" prefWidth="925.0" />
    </children>
 </AnchorPane>

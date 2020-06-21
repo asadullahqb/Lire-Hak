@@ -32,9 +32,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class QueryController implements Initializable {
     Stage window;
@@ -69,8 +67,15 @@ public class QueryController implements Initializable {
             System.out.println("No file chosen.");
         else {
 //            System.out.println(file.getAbsolutePath());
+            //Reset for the new indexing.
+            destroyElements();
+            count = 0;
+            queryProgressBar.progressProperty().unbind();
+            queryProgressBar.setProgress(0);
+
             imgPath.setText(file.getAbsolutePath());
             startQueryBtn.setDisable(false);
+            FeatureSelector.requestFocus();
         }
     }
 
@@ -91,6 +96,17 @@ public class QueryController implements Initializable {
         FeatureSelector.getSelectionModel().selectFirst();
     }
 
+    private void DisplayAlert(String title, String content){
+        //Used to notify the user.
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setGraphic(null);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
     public void Searching() {
         System.out.println(FeatureSelector.getValue());
         bgThread = new Service<String>() {
@@ -98,8 +114,25 @@ public class QueryController implements Initializable {
             protected Task<String> createTask() {
                 return new Task<String>() {
                     final String path = imgPath.getText();
+
+                    @Override
+                    protected void succeeded() {
+                        super.succeeded();
+
+                        DisplayAlert("Success", "Querying has completed successfully.");
+                        tilePane.requestFocus();
+                    }
+
+                    @Override
+                    protected void failed() {
+                        super.failed();
+
+                        DisplayAlert("Error", "An error has occurred while querying. Please try again.");
+                    }
+
                     @Override
                     protected String call() throws Exception {
+                        updateProgress(0,100); //Fix as a finite progress bar.
                         BufferedImage img = null;
                         File f = new File(path);
                         if (f.exists()) {
@@ -128,12 +161,13 @@ public class QueryController implements Initializable {
                             String fileName = ir.document(hits.documentID(i)).getValues(DocumentBuilder.FIELD_NAME_IDENTIFIER)[0];
 //                            System.out.println(hits.score(i) + ": \t" + fileName);
                             imageArray.add(fileName);
+                            updateProgress(i, hits.length());
                             Thread.sleep(50);
                         }
                         try {
                             Platform.runLater(() -> {
-                                createElements();
                                 updateProgress(100, 100);
+                                createElements();
                                 startQueryBtn.setDisable(true);
                             });
                         } catch (Exception e) {
@@ -151,9 +185,14 @@ public class QueryController implements Initializable {
     // For image loading
     private void createElements() {
         for (int i = 0; i < imageArray.size(); i++) {
-                tilePane.getChildren().add(createPage(count));
-                count++;
+            tilePane.getChildren().add(createPage(count));
+            count++;
         }
+    }
+
+    private void destroyElements() {
+        imageArray.removeAll(imageArray);
+        tilePane.getChildren().removeAll(tilePane.getChildren());
     }
 
     // TODO: Image array

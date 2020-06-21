@@ -57,6 +57,7 @@ public class IndexController implements Initializable {
         startIndexingBtn.setDisable(true);
         stopIndexingBtn.setDisable(true);
         chooseFolderBtn.setDisable(false);
+        filePath.setText(null);
     }
 
     @FXML
@@ -66,9 +67,16 @@ public class IndexController implements Initializable {
         if (directory == null)
             System.out.println("No directory chosen");
         else {
+            //Reset for the new indexing.
+            indexOutput.textProperty().unbind();
+            indexOutput.textProperty().setValue("");
+            indexProgressBar.progressProperty().unbind();
+            indexProgressBar.setProgress(0);
+
             System.out.println(directory.getAbsolutePath());
             filePath.setText(directory.getAbsolutePath());
             startIndexingBtn.setDisable(false);
+            startIndexingBtn.requestFocus();
         }
     }
 
@@ -77,6 +85,8 @@ public class IndexController implements Initializable {
         try {
             startIndexingBtn.setDisable(true);
             stopIndexingBtn.setDisable(false);
+            chooseFolderBtn.setDisable(true);
+            indexOutput.requestFocus();
             Indexing();
         } catch(Exception e) {
             System.out.println(e);
@@ -85,9 +95,29 @@ public class IndexController implements Initializable {
 
     @FXML
     private void stopIndexing(ActionEvent event) {
-        if (event.getSource() == stopIndexingBtn) {
+        try{
             bgThread.cancel();
+
+            DisplayAlert("Note", "You have stopped the indexing");
+
+            //Reset all the views.
+            startIndexingBtn.setDisable(false);
+            stopIndexingBtn.setDisable(true);
         }
+        catch(Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    private void DisplayAlert(String title, String content){
+        //Used to notify the user.
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setGraphic(null);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
     public void Indexing() {
@@ -97,11 +127,37 @@ public class IndexController implements Initializable {
                 return new Task<String>() {
                     StringBuilder results = new StringBuilder();
                     final String path = filePath.getText();
+
+                    @Override
+                    protected void succeeded() {
+                        super.succeeded();
+
+                        DisplayAlert("Success", "Indexing has completed successfully.");
+
+                        //Reset all the views.
+                        startIndexingBtn.setDisable(false);
+                        stopIndexingBtn.setDisable(true);
+                    }
+
+                    @Override
+                    protected void failed() {
+                        super.failed();
+
+                        DisplayAlert("Error", "An error has occurred while indexing. Please try again.");
+
+                        //Reset all the views.
+                        startIndexingBtn.setDisable(true);
+                        stopIndexingBtn.setDisable(true);
+                        chooseFolderBtn.setDisable(false);
+                        filePath.setText(null);
+                    }
+
                     @Override
                     public String call() throws IOException, InterruptedException {
+                        updateProgress(0,100); //Fix as a finite progress bar.
                         System.out.println("Path to folder: " + path);
                         ArrayList<String> images = FileUtils.getAllImages(new File(path), true);
-
+                        int numImages = images.size();
                         // Creating a CEDD document builder;
                         GlobalDocumentBuilder globalDocumentBuilder = new GlobalDocumentBuilder(CEDD.class);
 
@@ -110,10 +166,13 @@ public class IndexController implements Initializable {
                         globalDocumentBuilder.addExtractor(AutoColorCorrelogram.class);
 
                         try {
+                            int progress = 0;
                             for (Iterator<String> it = images.iterator(); it.hasNext(); ) {
                                 String imageFilePath = it.next();
-                                results.append("Indexing " + imageFilePath + "\n");
-                                updateValue(results.toString());
+                                //results.append("Indexing " + imageFilePath + "\n");
+                                //updateValue(results.toString());
+                                indexOutput.appendText("Indexing " + imageFilePath + "\n");
+                                //Using append directly on the text area has the benefit of auto-scrolling to the end.
                                 try {
                                     // Write indexed image features.
                                     BufferedImage img = ImageIO.read(new FileInputStream(imageFilePath));
@@ -125,27 +184,22 @@ public class IndexController implements Initializable {
                                     System.err.println("Error reading image or indexing it.");
                                     e.printStackTrace();
                                 }
+                                updateProgress(++progress, numImages);
+
                                 Thread.sleep(50);
                             }
                         } catch (Exception e) {
                             System.out.println(e);
                         }
                         LuceneIndexer();
-                        updateProgress(100, 100);
-                        results.append("Finished indexing.");
+                        //results.append("Finished indexing.");
+                        indexOutput.appendText("Finished indexing.");
                         return results.toString();
                     }
                 };
             }
         };
-        indexOutput.textProperty().bind(bgThread.valueProperty());
-        indexOutput.textProperty().addListener(new ChangeListener<Object>() {
-            @Override
-            public void changed(ObservableValue<?> observable, Object oldValue,
-                                Object newValue) {
-                indexOutput.setScrollTop(Double.MAX_VALUE);
-            }
-        });
+        //indexOutput.textProperty().bind(bgThread.valueProperty());
         indexProgressBar.progressProperty().bind(bgThread.progressProperty());
         bgThread.start();
     }
