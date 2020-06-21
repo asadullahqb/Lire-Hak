@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
@@ -40,7 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class Similar implements Initializable {
+public class MatchController implements Initializable {
     Stage window;
     private volatile Service<String> bgThread;
     private final List<String> imageArray = new ArrayList<>();
@@ -61,6 +62,12 @@ public class Similar implements Initializable {
     private Button chooseImgBtn2;
 
     @FXML
+    private ImageView firstImage;
+
+    @FXML
+    private ImageView secondImage;
+
+    @FXML
     private TextField imgPath1;
 
     @FXML
@@ -77,12 +84,23 @@ public class Similar implements Initializable {
     public void chooseMatchImg(int x) {
         FileChooser fc = new FileChooser();
         File file = fc.showOpenDialog(window);
+
         if (file == null)
             System.out.println("No file chosen.");
         else {
             switch (x) {
-                case 0: imgPath1.setText(file.getAbsolutePath()); break;
-                case 1: imgPath2.setText(file.getAbsolutePath()); break;
+                case 0:
+                    imgPath1.setText(file.getAbsolutePath());
+                    File f1 = new File(imgPath1.getText());
+                    Image img1 = new Image(f1.toURI().toString());
+                    firstImage.setImage(img1);
+                    break;
+                case 1:
+                    imgPath2.setText(file.getAbsolutePath());
+                    File f2 = new File(imgPath2.getText());
+                    Image img2 = new Image(f2.toURI().toString());
+                    secondImage.setImage(img2);
+                    break;
             }
         }
         startCalcBtn.setDisable(imgPath1.getText().isEmpty() || imgPath2.getText().isEmpty());
@@ -118,6 +136,22 @@ public class Similar implements Initializable {
             Output.appendText("Image Euclidean Distance based on CEDD feature: " + Math.sqrt(sumsqrdiff));
         }
         catch (Exception e) { System.err.println(e); }
+    }
+
+    // TODO: Fix this.
+    @FXML
+    private void image1DragOver(DragEvent e) {
+        if (e.getDragboard().hasFiles()) {
+            e.acceptTransferModes(TransferMode.ANY);
+        }
+    }
+
+    @FXML
+    private void image1DropHandler(DragEvent e) throws FileNotFoundException {
+        List<File> file = e.getDragboard().getFiles();
+        Image img = new Image(new FileInputStream(file.get(0)));
+        imgPath1.setText(file.get(0).toString());
+        firstImage.setImage(img);
     }
 
     @Override
