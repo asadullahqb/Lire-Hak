@@ -3,6 +3,8 @@ package EngineControllers;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -22,7 +24,9 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import net.semanticmetadata.lire.builders.DocumentBuilder;
+import net.semanticmetadata.lire.imageanalysis.features.global.AutoColorCorrelogram;
 import net.semanticmetadata.lire.imageanalysis.features.global.CEDD;
+import net.semanticmetadata.lire.imageanalysis.features.global.FCTH;
 import net.semanticmetadata.lire.searchers.*;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -36,6 +40,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.Buffer;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +80,9 @@ public class MatchController implements Initializable {
 
     @FXML
     private TextArea Output;
+
+    @FXML
+    private ComboBox FeatureSelector;
 
     @FXML
     public void btnOneHandler() { chooseMatchImg(0); }
@@ -120,11 +128,30 @@ public class MatchController implements Initializable {
             BufferedImage newimg2 = new BufferedImage(img2.getWidth(), img2.getHeight(), BufferedImage.TYPE_INT_RGB);
             newimg2.createGraphics().drawImage(img2, 0, 0, img2.getWidth(), img2.getHeight(), null);
 
+            String FeatureSelection = (String)FeatureSelector.getValue();
+
+            // consider that FeatureSelector defaults to CEDD
             CEDD obj = new CEDD();
             obj.extract(newimg1);
             double[] arr1 = obj.getFeatureVector();
             obj.extract(newimg2);
             double[] arr2 = obj.getFeatureVector();
+
+            // handle only if FeatureSelector is not CEDD, but rather the other two counterparts
+            if (FeatureSelection.equals("FCTH")) {
+                FCTH fobj = new FCTH();
+                fobj.extract(newimg1);
+                arr1 = fobj.getFeatureVector();
+                fobj.extract(newimg2);
+                arr2 = fobj.getFeatureVector();
+            }
+            else if (FeatureSelection.equals("AutoColorCorrelogram")) {
+                AutoColorCorrelogram ACCobj = new AutoColorCorrelogram();
+                ACCobj.extract(newimg1);
+                arr1 = ACCobj.getFeatureVector();
+                ACCobj.extract(newimg2);
+                arr2 = ACCobj.getFeatureVector();
+            }
 
             double sumdiff = 0.0;
             double sumsqrdiff = 0.0;
@@ -132,8 +159,8 @@ public class MatchController implements Initializable {
                 sumdiff += Math.abs(arr1[i] - arr2[i]);
                 sumsqrdiff += Math.pow((arr1[i] - arr2[i]), 2);
             }
-            Output.appendText("Image Manhattan Distance based on CEDD feature: " + sumdiff + "\n");
-            Output.appendText("Image Euclidean Distance based on CEDD feature: " + Math.sqrt(sumsqrdiff));
+            Output.appendText("Image Manhattan Distance based on " + FeatureSelection + " feature: " + sumdiff + "\n");
+            Output.appendText("Image Euclidean Distance based on " + FeatureSelection + " feature: " + Math.sqrt(sumsqrdiff));
         }
         catch (Exception e) { System.err.println(e); }
     }
@@ -168,5 +195,7 @@ public class MatchController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         startCalcBtn.setDisable(true);
+        FeatureSelector.getSelectionModel().selectFirst();
     }
 }
+
