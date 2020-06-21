@@ -28,7 +28,7 @@
          </font></Label>
       <TextField
               fx:id="filePath"
-              promptText="No image selected."
+              promptText="No folder selected."
               focusTraversable="false"
               editable="false"
               layoutX="40.0"
@@ -80,5 +80,14 @@
               prefHeight="25.0"
               prefWidth="150.0"
               text="Stop Indexing" />
+      <Button
+              fx:id="clearIndexBtn"
+              layoutX="358.0"
+              layoutY="95.0"
+              mnemonicParsing="false"
+              onAction="#clearIndex"
+              prefHeight="25.0"
+              prefWidth="150.0"
+              text="Clear Index" />
    </children>
 </AnchorPane>

@@ -35,6 +35,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 
 public class QueryController implements Initializable {
     Stage window;
@@ -70,8 +71,6 @@ public class QueryController implements Initializable {
         else {
 //            System.out.println(file.getAbsolutePath());
             //Reset for the new indexing.
-            destroyElements();
-            count = 0;
             queryProgressBar.progressProperty().unbind();
             queryProgressBar.setProgress(0);
 
@@ -84,6 +83,7 @@ public class QueryController implements Initializable {
     @FXML
     public void startQuery() {
          try {
+             destroyElements();
              Searching();
          } catch (Exception e) {
              System.err.println(e);
@@ -169,7 +169,6 @@ public class QueryController implements Initializable {
                             Platform.runLater(() -> {
                                 createElements();
                                 updateProgress(100, 100);
-                                startQueryBtn.setDisable(true);
                             });
                         } catch (Exception e) {
                             System.out.println(e);
@@ -194,6 +193,7 @@ public class QueryController implements Initializable {
     private void destroyElements() {
         imageArray.removeAll(imageArray);
         tilePane.getChildren().removeAll(tilePane.getChildren());
+        count = 0;
     }
 
     // TODO: Image array

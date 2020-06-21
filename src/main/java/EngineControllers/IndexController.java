@@ -17,17 +17,27 @@ import net.semanticmetadata.lire.imageanalysis.features.global.CEDD;
 import net.semanticmetadata.lire.imageanalysis.features.global.FCTH;
 import net.semanticmetadata.lire.utils.FileUtils;
 import net.semanticmetadata.lire.utils.LuceneUtils;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.util.Version;
+import org.w3c.dom.Text;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
 public class IndexController implements Initializable {
     Stage window;
@@ -52,12 +62,23 @@ public class IndexController implements Initializable {
     @FXML
     private Button stopIndexingBtn;
 
+    @FXML
+    private Button clearIndexBtn;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         startIndexingBtn.setDisable(true);
         stopIndexingBtn.setDisable(true);
         chooseFolderBtn.setDisable(false);
-        filePath.setText(null);
+
+        Preferences prefs = Preferences.userRoot().node("/LIRE-HAK/Store");
+        String prevIndexFilePath = prefs.get("indexingFilePath", "");
+        if(prevIndexFilePath != "") {
+            filePath.setText(prevIndexFilePath);
+            startIndexingBtn.setDisable(false);
+        }
+        else
+            clearIndexBtn.setDisable(true);
     }
 
     @FXML
@@ -98,15 +119,35 @@ public class IndexController implements Initializable {
         try{
             bgThread.cancel();
 
-            DisplayAlert("Note", "You have stopped the indexing");
+            DisplayAlert("Note", "You have stopped the indexing. Please start again.");
 
-            //Reset all the views.
-            startIndexingBtn.setDisable(false);
-            stopIndexingBtn.setDisable(true);
+            clearIndexMethod();
         }
         catch(Exception e) {
             System.out.println(e);
         }
+    }
+
+    @FXML
+    private void clearIndex(ActionEvent event) throws BackingStoreException {
+        clearIndexMethod();
+        DisplayAlert("Success", "The index has been cleared.");
+    }
+
+    private void clearIndexMethod() throws BackingStoreException {
+        //Clear preferences
+        Preferences prefs = Preferences.userRoot().node("/LIRE-HAK/Store");
+        prefs.clear();
+
+        //Reset views.
+        startIndexingBtn.setDisable(true);
+        stopIndexingBtn.setDisable(true);
+        clearIndexBtn.setDisable(true);
+        chooseFolderBtn.setDisable(false);
+        filePath.setText("");
+        indexProgressBar.progressProperty().unbind();
+        indexProgressBar.setProgress(0);
+        indexOutput.setText("");
     }
 
     private void DisplayAlert(String title, String content){
@@ -132,22 +173,29 @@ public class IndexController implements Initializable {
                     protected void succeeded() {
                         super.succeeded();
 
-                        DisplayAlert("Success", "Indexing has completed successfully.");
+                        DisplayAlert("Success", "Indexing has completed.");
 
                         //Reset all the views.
                         startIndexingBtn.setDisable(false);
                         stopIndexingBtn.setDisable(true);
+                        clearIndexBtn.setDisable(false);
+                        chooseFolderBtn.setDisable(false);
+
+                        //Store file path in previous index.
+                        Preferences prefs = Preferences.userRoot().node("/LIRE-HAK/Store");
+                        prefs.put("indexingFilePath", filePath.getText());
                     }
 
                     @Override
                     protected void failed() {
                         super.failed();
 
-                        DisplayAlert("Error", "An error has occurred while indexing. Please try again.");
+                        DisplayAlert("Error", "A problem occurred while indexing. Please try again.");
 
                         //Reset all the views.
                         startIndexingBtn.setDisable(true);
                         stopIndexingBtn.setDisable(true);
+                        clearIndexBtn.setDisable(false);
                         chooseFolderBtn.setDisable(false);
                         filePath.setText(null);
                     }
