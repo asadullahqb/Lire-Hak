@@ -102,12 +102,14 @@ public class MatchController implements Initializable {
                     File f1 = new File(imgPath1.getText());
                     Image img1 = new Image(f1.toURI().toString());
                     firstImage.setImage(img1);
+                    chooseImgBtn2.requestFocus();
                     break;
                 case 1:
                     imgPath2.setText(file.getAbsolutePath());
                     File f2 = new File(imgPath2.getText());
                     Image img2 = new Image(f2.toURI().toString());
                     secondImage.setImage(img2);
+                    startCalcBtn.requestFocus();
                     break;
             }
         }
@@ -159,10 +161,16 @@ public class MatchController implements Initializable {
                 sumdiff += Math.abs(arr1[i] - arr2[i]);
                 sumsqrdiff += Math.pow((arr1[i] - arr2[i]), 2);
             }
+
+            DisplayAlert("Success", "Matching has completed successfully.");
+
             Output.appendText("Image Manhattan Distance based on " + FeatureSelection + " feature: " + sumdiff + "\n");
             Output.appendText("Image Euclidean Distance based on " + FeatureSelection + " feature: " + Math.sqrt(sumsqrdiff));
         }
-        catch (Exception e) { System.err.println(e); }
+        catch (Exception e) {
+            DisplayAlert("Error", "An error has occured while matching. Please try again.");
+            System.err.println(e);
+        }
     }
 
     @FXML
@@ -196,6 +204,17 @@ public class MatchController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         startCalcBtn.setDisable(true);
         FeatureSelector.getSelectionModel().selectFirst();
+    }
+
+    private void DisplayAlert(String title, String content){
+        //Used to notify the user.
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setGraphic(null);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }
 
