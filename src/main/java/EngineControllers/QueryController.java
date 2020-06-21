@@ -18,7 +18,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import net.semanticmetadata.lire.builders.DocumentBuilder;
+import net.semanticmetadata.lire.imageanalysis.features.global.AutoColorCorrelogram;
 import net.semanticmetadata.lire.imageanalysis.features.global.CEDD;
+import net.semanticmetadata.lire.imageanalysis.features.global.FCTH;
 import net.semanticmetadata.lire.searchers.*;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
@@ -57,6 +59,9 @@ public class QueryController implements Initializable {
     private Button startQueryBtn;
 
     @FXML
+    private ComboBox FeatureSelector;
+
+    @FXML
     public void chooseImg() {
         FileChooser fc = new FileChooser();
         File file = fc.showOpenDialog(window);
@@ -83,9 +88,11 @@ public class QueryController implements Initializable {
         tilePane.setHgap(GAP);
         tilePane.setVgap(GAP);
         startQueryBtn.setDisable(true);
+        FeatureSelector.getSelectionModel().selectFirst();
     }
 
     public void Searching() {
+        System.out.println(FeatureSelector.getValue());
         bgThread = new Service<String>() {
             @Override
             protected Task<String> createTask() {
@@ -104,7 +111,16 @@ public class QueryController implements Initializable {
                         }
 
                         IndexReader ir = DirectoryReader.open(FSDirectory.open(Paths.get("indexPath")));
-                        ImageSearcher searcher = new GenericFastImageSearcher(30, CEDD.class);
+                        ImageSearcher searcher;
+
+                        switch ((String)FeatureSelector.getValue()) {
+                            case "FCTH":
+                                searcher = new GenericFastImageSearcher(30, FCTH.class); break;
+                            case "AutoColorCorrelogram":
+                                searcher = new GenericFastImageSearcher(30, AutoColorCorrelogram.class); break;
+                            default:
+                                searcher = new GenericFastImageSearcher(30, CEDD.class); break;
+                        }
                         ImageSearchHits hits = searcher.search(img, ir);
                         System.out.println(hits);
 
@@ -166,3 +182,4 @@ public class QueryController implements Initializable {
         return pageBox;
     }
 }
+
