@@ -49,10 +49,19 @@ public class SideBarController implements Initializable {
         System.out.println("QueryController pane is clicked.");
 
         Preferences prefs = Preferences.userRoot().node("/LIRE-HAK/Store");
-        if(prefs.get("indexingFilePath", "") == ""){
+        boolean isIndexing = prefs.getBoolean("isIndexing", false);
+        if(isIndexing) {
+            DisplayAlert("Error", "Please finish indexing first!");
+            return;
+        }
+
+        Preferences prefs2 = Preferences.userRoot().node("/LIRE-HAK/Store");
+        if(prefs2.get("indexingFilePath", "") == ""){
             DisplayAlert("Error", "Please perform indexing first.");
             return;
         }
+
+
 
         //Set only this button disabled.
         indexButtonId.setDisable(false);
@@ -67,6 +76,13 @@ public class SideBarController implements Initializable {
     @FXML
     private void similarBtn(ActionEvent event) {
         System.out.println("FeatureSimilarity pane is clicked.");
+
+        Preferences prefs2 = Preferences.userRoot().node("/LIRE-HAK/Store");
+        boolean isIndexing = prefs2.getBoolean("isIndexing", false);
+        if(isIndexing) {
+            DisplayAlert("Error", "Please finish indexing first!");
+            return;
+        }
 
         //Set only this button disabled.
         indexButtonId.setDisable(false);

@@ -108,6 +108,8 @@ public class IndexController implements Initializable {
             stopIndexingBtn.setDisable(false);
             chooseFolderBtn.setDisable(true);
             indexOutput.requestFocus();
+            Preferences prefs = Preferences.userRoot().node("/LIRE-HAK/Store");
+            prefs.putBoolean("isIndexing", true);
             Indexing();
         } catch(Exception e) {
             System.out.println(e);
@@ -118,6 +120,8 @@ public class IndexController implements Initializable {
     private void stopIndexing(ActionEvent event) {
         try{
             bgThread.cancel();
+            Preferences prefs = Preferences.userRoot().node("/LIRE-HAK/Store");
+            prefs.putBoolean("isIndexing", false);
 
             DisplayAlert("Note", "You have stopped the indexing. Please start again.");
 
@@ -173,6 +177,9 @@ public class IndexController implements Initializable {
                     protected void succeeded() {
                         super.succeeded();
 
+                        Preferences prefs = Preferences.userRoot().node("/LIRE-HAK/Store");
+                        prefs.putBoolean("isIndexing", false);
+
                         DisplayAlert("Success", "Indexing has completed.");
 
                         //Reset all the views.
@@ -182,13 +189,16 @@ public class IndexController implements Initializable {
                         chooseFolderBtn.setDisable(false);
 
                         //Store file path in previous index.
-                        Preferences prefs = Preferences.userRoot().node("/LIRE-HAK/Store");
-                        prefs.put("indexingFilePath", filePath.getText());
+                        Preferences prefs2 = Preferences.userRoot().node("/LIRE-HAK/Store");
+                        prefs2.put("indexingFilePath", filePath.getText());
                     }
 
                     @Override
                     protected void failed() {
                         super.failed();
+
+                        Preferences prefs = Preferences.userRoot().node("/LIRE-HAK/Store");
+                        prefs.putBoolean("isIndexing", false);
 
                         DisplayAlert("Error", "A problem occurred while indexing. Please try again.");
 
