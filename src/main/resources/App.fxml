@@ -27,11 +27,12 @@
             <VBox
                     id="sidebar"
                     prefHeight="400.0"
-                    prefWidth="118.0"
+                    prefWidth="158.0"
                     BorderPane.alignment="CENTER">
                <children>
                   <Button
                           fx:id="indexButtonId"
+                          alignment="CENTER"
                           focusTraversable="false"
                           mnemonicParsing="false"
                           onAction="#indexBtn"
@@ -49,6 +50,7 @@
                      </VBox.margin></Button>
                   <Button
                           fx:id="queryButtonId"
+                          alignment="CENTER"
                           focusTraversable="false"
                           mnemonicParsing="false"
                           onAction="#queryBtn"
@@ -66,6 +68,7 @@
                      </VBox.margin></Button>
                   <Button
                           fx:id="similarButtonId"
+                          alignment="CENTER"
                           focusTraversable="false"
                           mnemonicParsing="false"
                           onAction="#similarBtn"
