@@ -4,12 +4,14 @@ import EngineControllers.IndexController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 
 public class SideBarController implements Initializable {
     SwitchView switchView = new SwitchView();
@@ -46,6 +48,21 @@ public class SideBarController implements Initializable {
     private void queryBtn(ActionEvent event) {
         System.out.println("QueryController pane is clicked.");
 
+        Preferences prefs = Preferences.userRoot().node("/LIRE-HAK/Store");
+        boolean isIndexing = prefs.getBoolean("isIndexing", false);
+        if(isIndexing) {
+            DisplayAlert("Error", "Please finish indexing first!");
+            return;
+        }
+
+        Preferences prefs2 = Preferences.userRoot().node("/LIRE-HAK/Store");
+        if(prefs2.get("indexingFilePath", "") == ""){
+            DisplayAlert("Error", "Please perform indexing first.");
+            return;
+        }
+
+
+
         //Set only this button disabled.
         indexButtonId.setDisable(false);
         queryButtonId.setDisable(true);
@@ -59,6 +76,13 @@ public class SideBarController implements Initializable {
     @FXML
     private void similarBtn(ActionEvent event) {
         System.out.println("FeatureSimilarity pane is clicked.");
+
+        Preferences prefs2 = Preferences.userRoot().node("/LIRE-HAK/Store");
+        boolean isIndexing = prefs2.getBoolean("isIndexing", false);
+        if(isIndexing) {
+            DisplayAlert("Error", "Please finish indexing first!");
+            return;
+        }
 
         //Set only this button disabled.
         indexButtonId.setDisable(false);
@@ -83,6 +107,17 @@ public class SideBarController implements Initializable {
         //Initialize with the index view.
         Pane v = switchView.getPane(SwitchView.CurrentPane.INDEX);
         mainPane.setCenter(v);
+    }
+
+    private void DisplayAlert(String title, String content){
+        //Used to notify the user.
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(null);
+        alert.setGraphic(null);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 
 
