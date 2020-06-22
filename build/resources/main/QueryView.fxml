@@ -56,7 +56,7 @@
               text="Begin Querying Images" />
       <ComboBox
               fx:id="FeatureSelector"
-              layoutX="219.0"
+              layoutX="217.0"
               layoutY="105.0">
          <items>
             <FXCollections

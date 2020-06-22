@@ -27,6 +27,10 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        //Clear isIndexing. This is done to ensure the program is not stuck in isIndexing state after it crashes or is force stopped.
+        Preferences prefs = Preferences.userRoot().node("/LIRE-HAK/Store");
+        prefs.putBoolean("isIndexing", false);
+
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("App.fxml")));
         window = primaryStage;
         window.setTitle("DonutRanger");
