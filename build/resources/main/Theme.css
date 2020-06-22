@@ -1,8 +1,4 @@
 .root {
-    -fx-background-color: #ffffff;
+    -fx-background-color: #383838;
     -fx-font-size: 14px;
-}
-
-.view{
-    -fx-background-color: #f8fafd;
 }
