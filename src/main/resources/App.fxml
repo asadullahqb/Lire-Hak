@@ -6,83 +6,23 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane
-        maxHeight="-Infinity"
-        maxWidth="-Infinity"
-        minHeight="-Infinity"
-        minWidth="-Infinity"
-        prefHeight="600.0"
-        prefWidth="1000.0"
-        stylesheets="@Theme.css"
-        xmlns="http://javafx.com/javafx/11.0.1"
-        xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="ViewControllers.SideBarController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1500.0" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewControllers.SideBarController">
    <children>
-      <BorderPane
-              fx:id="mainPane"
-              prefHeight="600.0"
-              prefWidth="1000.0"
-              stylesheets="@Theme.css">
+      <BorderPane fx:id="mainPane" prefHeight="600.0" prefWidth="1500.0" stylesheets="@Theme.css">
          <left>
-            <VBox
-                    id="sidebar"
-                    prefHeight="400.0"
-                    prefWidth="158.0"
-                    BorderPane.alignment="CENTER">
+            <VBox id="sidebar" prefHeight="400.0" prefWidth="158.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button
-                          fx:id="indexButtonId"
-                          alignment="CENTER"
-                          focusTraversable="false"
-                          mnemonicParsing="false"
-                          onAction="#indexBtn"
-                          prefHeight="60.0"
-                          prefWidth="98.0"
-                          text="Index Images"
-                          textAlignment="CENTER"
-                          wrapText="true">
+                  <Button fx:id="indexButtonId" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#indexBtn" prefHeight="60.0" prefWidth="98.0" text="Index Images" textAlignment="CENTER" wrapText="true">
                      <VBox.margin>
-                        <Insets
-                                bottom="10.0"
-                                left="10.0"
-                                right="10.0"
-                                top="10.0" />
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin></Button>
-                  <Button
-                          fx:id="queryButtonId"
-                          alignment="CENTER"
-                          focusTraversable="false"
-                          mnemonicParsing="false"
-                          onAction="#queryBtn"
-                          prefHeight="60.0"
-                          prefWidth="98.0"
-                          text="Query Images"
-                          textAlignment="CENTER"
-                          wrapText="true">
+                  <Button fx:id="queryButtonId" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#queryBtn" prefHeight="60.0" prefWidth="98.0" text="Query Images" textAlignment="CENTER" wrapText="true">
                      <VBox.margin>
-                        <Insets
-                                bottom="10.0"
-                                left="10.0"
-                                right="10.0"
-                                top="10.0" />
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin></Button>
-                  <Button
-                          fx:id="similarButtonId"
-                          alignment="CENTER"
-                          focusTraversable="false"
-                          mnemonicParsing="false"
-                          onAction="#similarBtn"
-                          prefHeight="60.0"
-                          prefWidth="98.0"
-                          text="Similarity Matching"
-                          textAlignment="CENTER"
-                          wrapText="true">
+                  <Button fx:id="similarButtonId" alignment="CENTER" focusTraversable="false" mnemonicParsing="false" onAction="#similarBtn" prefHeight="60.0" prefWidth="98.0" text="Similarity Matching" textAlignment="CENTER" wrapText="true">
                      <VBox.margin>
-                        <Insets
-                                bottom="10.0"
-                                left="10.0"
-                                right="10.0"
-                                top="10.0" />
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin></Button>
                </children>
             </VBox>

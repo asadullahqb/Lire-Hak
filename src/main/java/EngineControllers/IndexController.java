@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import net.semanticmetadata.lire.builders.GlobalDocumentBuilder;
@@ -71,6 +72,22 @@ public class IndexController implements Initializable {
         startIndexingBtn.setDisable(true);
         stopIndexingBtn.setDisable(true);
         chooseFolderBtn.setDisable(false);
+
+
+        //Set up graphics.
+        var polygon = new javafx.scene.shape.Polygon();
+        polygon.getPoints().addAll(new Double[]{
+                5.625 , 1.25 ,
+                1.25 , 10.0 ,
+                10.0 , 10.0 , });
+        polygon.setFill(Color.GREEN);
+        polygon.setRotate(90.0);
+        startIndexingBtn.setGraphic(polygon);
+
+        var rectangle = new javafx.scene.shape.Rectangle(7.8125, 7.8125);
+        rectangle.setFill(Color.RED);
+        stopIndexingBtn.setGraphic(rectangle);
+        //
 
         Preferences prefs = Preferences.userRoot().node("/LIRE-HAK/Store");
         String prevIndexFilePath = prefs.get("indexingFilePath", "");

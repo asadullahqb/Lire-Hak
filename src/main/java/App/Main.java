@@ -1,3 +1,5 @@
+// HAK - Haris, Asad, Kyon
+
 package App;
 
 import javafx.application.Application;
@@ -33,14 +35,15 @@ public class Main extends Application {
 
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("App.fxml")));
         window = primaryStage;
-        window.setTitle("DonutRanger");
+        window.setTitle("LIRE-HAK Application");
 
         window.setOnCloseRequest(event -> {
             event.consume();
             closeProgram();
         });
 
-        window.setScene(new Scene(root, 1100, 600));
+        window.setScene(new Scene(root, 1150, 600));
+        window.setResizable(false);
         window.show();
 
         bgThread = new Service<String>() {
