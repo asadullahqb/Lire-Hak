@@ -1,5 +1,6 @@
 package EngineControllers;
 
+import App.DialogService;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -54,6 +55,9 @@ public class QueryController implements Initializable {
     private ProgressBar queryProgressBar;
 
     @FXML
+    private Label resultsLabel;
+
+    @FXML
     private TilePane tilePane;
 
     @FXML
@@ -82,12 +86,12 @@ public class QueryController implements Initializable {
 
     @FXML
     public void startQuery() {
-         try {
-             destroyElements();
-             Searching();
-         } catch (Exception e) {
-             System.err.println(e);
-         }
+        try {
+            destroyElements();
+            Searching();
+        } catch (Exception e) {
+            System.err.println(e);
+        }
     }
 
     @Override
@@ -96,17 +100,6 @@ public class QueryController implements Initializable {
         tilePane.setVgap(GAP);
         startQueryBtn.setDisable(true);
         FeatureSelector.getSelectionModel().selectFirst();
-    }
-
-    private void DisplayAlert(String title, String content){
-        //Used to notify the user.
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(null);
-        alert.setGraphic(null);
-        alert.setTitle(title);
-        alert.setContentText(content);
-        alert.showAndWait();
     }
 
     public void Searching() {
@@ -121,7 +114,7 @@ public class QueryController implements Initializable {
                     protected void succeeded() {
                         super.succeeded();
 
-                        DisplayAlert("Success", "Querying has completed successfully.");
+                        DialogService.DisplayAlert("Success", "Querying has completed successfully.");
                         tilePane.requestFocus();
                     }
 
@@ -129,7 +122,7 @@ public class QueryController implements Initializable {
                     protected void failed() {
                         super.failed();
 
-                        DisplayAlert("Error", "An error has occurred while querying. Please try again.");
+                        DialogService.DisplayAlert("Error", "An error has occurred while querying. Please try again.");
                     }
 
                     @Override
@@ -184,13 +177,15 @@ public class QueryController implements Initializable {
 
     // For image loading
     private void createElements() {
+        resultsLabel.setVisible(true);
         for (int i = 0; i < imageArray.size(); i++) {
-                tilePane.getChildren().add(createPage(count));
-                count++;
+            tilePane.getChildren().add(createPage(count));
+            count++;
         }
     }
 
     private void destroyElements() {
+        resultsLabel.setVisible(false);
         imageArray.removeAll(imageArray);
         tilePane.getChildren().removeAll(tilePane.getChildren());
         count = 0;

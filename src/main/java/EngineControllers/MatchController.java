@@ -1,5 +1,6 @@
 package EngineControllers;
 
+import App.DialogService;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -162,13 +163,13 @@ public class MatchController implements Initializable {
                 sumsqrdiff += Math.pow((arr1[i] - arr2[i]), 2);
             }
 
-            DisplayAlert("Success", "Matching has completed successfully.");
+            DialogService.DisplayAlert("Success", "Matching has completed successfully.");
 
             Output.appendText("Image Manhattan Distance based on " + FeatureSelection + " feature: " + sumdiff + "\n");
             Output.appendText("Image Euclidean Distance based on " + FeatureSelection + " feature: " + Math.sqrt(sumsqrdiff));
         }
         catch (Exception e) {
-            DisplayAlert("Error", "An error has occured while matching. Please try again.");
+            DialogService.DisplayAlert("Error", "An error has occured while matching. Please try again.");
             System.err.println(e);
         }
     }
@@ -204,17 +205,6 @@ public class MatchController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         startCalcBtn.setDisable(true);
         FeatureSelector.getSelectionModel().selectFirst();
-    }
-
-    private void DisplayAlert(String title, String content){
-        //Used to notify the user.
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(null);
-        alert.setGraphic(null);
-        alert.setTitle(title);
-        alert.setContentText(content);
-        alert.showAndWait();
     }
 }
 

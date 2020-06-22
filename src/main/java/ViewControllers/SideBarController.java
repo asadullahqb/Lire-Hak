@@ -1,5 +1,6 @@
 package ViewControllers;
 
+import App.DialogService;
 import EngineControllers.IndexController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -51,13 +52,13 @@ public class SideBarController implements Initializable {
         Preferences prefs = Preferences.userRoot().node("/LIRE-HAK/Store");
         boolean isIndexing = prefs.getBoolean("isIndexing", false);
         if(isIndexing) {
-            DisplayAlert("Error", "Please finish indexing first!");
+            DialogService.DisplayAlert("Error", "Please finish indexing first!");
             return;
         }
 
         Preferences prefs2 = Preferences.userRoot().node("/LIRE-HAK/Store");
         if(prefs2.get("indexingFilePath", "") == ""){
-            DisplayAlert("Error", "Please perform indexing first.");
+            DialogService.DisplayAlert("Error", "Please perform indexing first.");
             return;
         }
 
@@ -72,7 +73,7 @@ public class SideBarController implements Initializable {
 //        Pane v = switchView.getPane("QueryController");
         mainPane.setCenter(v);
     }
-    
+
     @FXML
     private void similarBtn(ActionEvent event) {
         System.out.println("FeatureSimilarity pane is clicked.");
@@ -80,7 +81,7 @@ public class SideBarController implements Initializable {
         Preferences prefs2 = Preferences.userRoot().node("/LIRE-HAK/Store");
         boolean isIndexing = prefs2.getBoolean("isIndexing", false);
         if(isIndexing) {
-            DisplayAlert("Error", "Please finish indexing first!");
+            DialogService.DisplayAlert("Error", "Please finish indexing first!");
             return;
         }
 
@@ -108,17 +109,4 @@ public class SideBarController implements Initializable {
         Pane v = switchView.getPane(SwitchView.CurrentPane.INDEX);
         mainPane.setCenter(v);
     }
-
-    private void DisplayAlert(String title, String content){
-        //Used to notify the user.
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(null);
-        alert.setGraphic(null);
-        alert.setTitle(title);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
-
-
 }

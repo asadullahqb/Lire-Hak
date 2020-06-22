@@ -16,4 +16,12 @@
 
 #sidebar {
     -fx-background-color: #ADE9FF;
+    -fx-padding: 20;
+}
+
+#viewTitle {
+    -fx-font-weight: bold;
+    -fx-font-size: 25;
+    -fx-pref-height: 27.0;
+    -fx-pref-width: 1000.0;
 }

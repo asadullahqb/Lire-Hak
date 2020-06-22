@@ -1,5 +1,3 @@
-// HAK - Haris, Asad, Kyon
-
 package App;
 
 import javafx.application.Application;
@@ -9,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
@@ -32,7 +29,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("App.fxml")));
         window = primaryStage;
-        window.setTitle("LIRE-HAK Application");
+        window.setTitle("DonutRanger");
 
         window.setOnCloseRequest(event -> {
             event.consume();
@@ -53,7 +50,7 @@ public class Main extends Application {
                         //Check and notify of existing index.
                         Preferences prefs = Preferences.userRoot().node("/LIRE-HAK/Store");
                         if(prefs.get("indexingFilePath", "") != "")
-                            DisplayAlert("Note", "You had previously performed indexing. You can immediately\nproceed to querying with the previous index or perform a new\nindex if you wish.");
+                            DialogService.DisplayAlert("Note", "You had previously performed indexing. You can immediately\nproceed to querying with the previous index or perform a new\nindex if you wish.");
                     }
 
                     @Override
@@ -71,17 +68,6 @@ public class Main extends Application {
         Boolean answer = ConfirmBox.display("Sure you want to exit?", "Exit?");
         if (answer)
             window.close();
-    }
-
-    private void DisplayAlert(String title, String content){
-        //Used to notify the user.
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(null);
-        alert.setGraphic(null);
-        alert.setTitle(title);
-        alert.setContentText(content);
-        alert.showAndWait();
     }
 
     @FXML

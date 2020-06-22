@@ -13,6 +13,7 @@
         minWidth="-Infinity"
         prefHeight="600.0"
         prefWidth="1000.0"
+        stylesheets="@Theme.css"
         xmlns="http://javafx.com/javafx/11.0.1"
         xmlns:fx="http://javafx.com/fxml/1"
         fx:controller="ViewControllers.SideBarController">
@@ -24,18 +25,21 @@
               stylesheets="@Theme.css">
          <left>
             <VBox
+                    id="sidebar"
                     prefHeight="400.0"
-                    prefWidth="118.0"
+                    prefWidth="158.0"
                     BorderPane.alignment="CENTER">
                <children>
                   <Button
                           fx:id="indexButtonId"
+                          alignment="CENTER"
                           focusTraversable="false"
                           mnemonicParsing="false"
                           onAction="#indexBtn"
                           prefHeight="60.0"
                           prefWidth="98.0"
                           text="Index Images"
+                          textAlignment="CENTER"
                           wrapText="true">
                      <VBox.margin>
                         <Insets
@@ -46,12 +50,14 @@
                      </VBox.margin></Button>
                   <Button
                           fx:id="queryButtonId"
+                          alignment="CENTER"
                           focusTraversable="false"
                           mnemonicParsing="false"
                           onAction="#queryBtn"
                           prefHeight="60.0"
                           prefWidth="98.0"
                           text="Query Images"
+                          textAlignment="CENTER"
                           wrapText="true">
                      <VBox.margin>
                         <Insets
@@ -62,6 +68,7 @@
                      </VBox.margin></Button>
                   <Button
                           fx:id="similarButtonId"
+                          alignment="CENTER"
                           focusTraversable="false"
                           mnemonicParsing="false"
                           onAction="#similarBtn"
