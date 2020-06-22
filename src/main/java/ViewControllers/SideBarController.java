@@ -107,6 +107,9 @@ public class SideBarController implements Initializable {
 
         //Initialize with the index view.
         Pane v = switchView.getPane(SwitchView.CurrentPane.INDEX);
+        //v.getStylesheets().clear();
+
         mainPane.setCenter(v);
+        mainPane.setRight(null);
     }
 }

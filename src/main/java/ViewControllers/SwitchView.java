@@ -1,6 +1,7 @@
 package ViewControllers;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
 public class SwitchView {

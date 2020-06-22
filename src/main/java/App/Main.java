@@ -36,7 +36,11 @@ public class Main extends Application {
             closeProgram();
         });
 
-        window.setScene(new Scene(root, 1100, 600));
+        Scene scene = new Scene(root, 1100, 600);
+        scene.getStylesheets().add(getClass().getClassLoader().getResource("Theme.css").toExternalForm());
+
+        window.setScene(scene);
+        //window.setScene(new Scene(root, 1100, 600));
         window.show();
 
         bgThread = new Service<String>() {
