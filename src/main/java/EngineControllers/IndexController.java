@@ -1,5 +1,6 @@
 package EngineControllers;
 
+import App.DialogService;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -123,7 +124,7 @@ public class IndexController implements Initializable {
             Preferences prefs = Preferences.userRoot().node("/LIRE-HAK/Store");
             prefs.putBoolean("isIndexing", false);
 
-            DisplayAlert("Note", "You have stopped the indexing. Please start again.");
+            DialogService.DisplayAlert("Note", "You have stopped the indexing. Please start again.");
 
             clearIndexMethod();
         }
@@ -135,7 +136,7 @@ public class IndexController implements Initializable {
     @FXML
     private void clearIndex(ActionEvent event) throws BackingStoreException {
         clearIndexMethod();
-        DisplayAlert("Success", "The index has been cleared.");
+        DialogService.DisplayAlert("Success", "The index has been cleared.");
     }
 
     private void clearIndexMethod() throws BackingStoreException {
@@ -154,17 +155,6 @@ public class IndexController implements Initializable {
         indexOutput.setText("");
     }
 
-    private void DisplayAlert(String title, String content){
-        //Used to notify the user.
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(null);
-        alert.setGraphic(null);
-        alert.setTitle(title);
-        alert.setContentText(content);
-        alert.showAndWait();
-    }
-
     public void Indexing() {
         bgThread = new Service<String>() {
             @Override
@@ -180,7 +170,7 @@ public class IndexController implements Initializable {
                         Preferences prefs = Preferences.userRoot().node("/LIRE-HAK/Store");
                         prefs.putBoolean("isIndexing", false);
 
-                        DisplayAlert("Success", "Indexing has completed.");
+                        DialogService.DisplayAlert("Success", "Indexing has completed.");
 
                         //Reset all the views.
                         startIndexingBtn.setDisable(false);
@@ -200,7 +190,7 @@ public class IndexController implements Initializable {
                         Preferences prefs = Preferences.userRoot().node("/LIRE-HAK/Store");
                         prefs.putBoolean("isIndexing", false);
 
-                        DisplayAlert("Error", "A problem occurred while indexing. Please try again.");
+                        DialogService.DisplayAlert("Error", "A problem occurred while indexing. Please try again.");
 
                         //Reset all the views.
                         startIndexingBtn.setDisable(true);
