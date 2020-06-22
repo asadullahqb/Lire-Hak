@@ -1,4 +1,19 @@
 .root {
-    -fx-background-color: #383838;
-    -fx-font-size: 14px;
+    -fx-background-color: #FEFFEA;
+    -fx-font-size: 13px;
+    -fx-focus-color: transparent;
+}
+
+.button {
+    -fx-background-color: #44CCFF;
+    -fx-color-label-visible: black;
+    -fx-border-radius: 5px;
+}
+
+.alert {
+    -fx-background-color: black;
+}
+
+#sidebar {
+    -fx-background-color: #ADE9FF;
 }
