@@ -36,7 +36,7 @@ public class Main extends Application {
             closeProgram();
         });
 
-        window.setScene(new Scene(root, 1100, 600));
+        window.setScene(new Scene(root, 1150, 600));
         window.show();
 
         bgThread = new Service<String>() {

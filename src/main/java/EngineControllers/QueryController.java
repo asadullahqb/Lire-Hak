@@ -58,6 +58,9 @@ public class QueryController implements Initializable {
     private Label resultsLabel;
 
     @FXML
+    private ScrollPane scrollPane;
+
+    @FXML
     private TilePane tilePane;
 
     @FXML
@@ -98,6 +101,7 @@ public class QueryController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         tilePane.setHgap(GAP);
         tilePane.setVgap(GAP);
+        scrollPane.setFitToWidth(true);
         startQueryBtn.setDisable(true);
         FeatureSelector.getSelectionModel().selectFirst();
     }
@@ -177,7 +181,6 @@ public class QueryController implements Initializable {
 
     // For image loading
     private void createElements() {
-        resultsLabel.setVisible(true);
         for (int i = 0; i < imageArray.size(); i++) {
             tilePane.getChildren().add(createPage(count));
             count++;
@@ -185,7 +188,6 @@ public class QueryController implements Initializable {
     }
 
     private void destroyElements() {
-        resultsLabel.setVisible(false);
         imageArray.removeAll(imageArray);
         tilePane.getChildren().removeAll(tilePane.getChildren());
         count = 0;

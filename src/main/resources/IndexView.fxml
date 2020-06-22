@@ -9,84 +9,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane
-        prefHeight="600.0"
-        prefWidth="1000.0"
-        xmlns="http://javafx.com/javafx/11.0.1"
-        xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="EngineControllers.IndexController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EngineControllers.IndexController">
    <children>
-      <Label
-              id="viewTitle"
-              layoutX="25.0"
-              layoutY="14.0"
-              text="Index Images / Extract Features">
+      <Label id="viewTitle" layoutX="25.0" layoutY="14.0" text="Index Images / Extract Features">
          <font>
-            <Font
-                    size="18.0" />
+            <Font size="18.0" />
          </font></Label>
-      <TextField
-              fx:id="filePath"
-              promptText="No folder selected."
-              focusTraversable="false"
-              editable="false"
-              layoutX="25.0"
-              layoutY="60.0"
-              prefHeight="25.0"
-              prefWidth="749.0" />
-      <Button
-              fx:id="chooseFolderBtn"
-              layoutX="783.0"
-              layoutY="60.0"
-              mnemonicParsing="false"
-              onAction="#chooseFolder"
-              prefHeight="25.0"
-              prefWidth="136.0"
-              text="Choose Folder..." />
-      <Button
-              fx:id="startIndexingBtn"
-              layoutX="25.0"
-              layoutY="105.0"
-              mnemonicParsing="false"
-              onAction="#startIndexing"
-              prefHeight="25.0"
-              prefWidth="150.0"
-              text="Start Indexing" />
-      <ProgressBar
-              fx:id="indexProgressBar"
-              layoutX="25.0"
-              layoutY="141.0"
-              prefHeight="25.0"
-              prefWidth="894.0"
-              progress="0.0" />
-      <TextArea
-              fx:id="indexOutput"
-              editable="false"
-              layoutX="25.0"
-              layoutY="175.0"
-              prefHeight="413.0"
-              prefWidth="894.0">
+      <TextField fx:id="filePath" editable="false" focusTraversable="false" layoutX="25.0" layoutY="60.0" prefHeight="25.0" prefWidth="806.0" promptText="No folder selected." />
+      <Button fx:id="chooseFolderBtn" layoutX="840.0" layoutY="60.0" mnemonicParsing="false" onAction="#chooseFolder" prefHeight="25.0" prefWidth="136.0" text="Choose Folder..." />
+      <Button fx:id="startIndexingBtn" layoutX="25.0" layoutY="105.0" mnemonicParsing="false" onAction="#startIndexing" prefHeight="25.0" prefWidth="150.0" text="Start Indexing" />
+      <ProgressBar fx:id="indexProgressBar" layoutX="25.0" layoutY="141.0" prefHeight="25.0" prefWidth="951.0" progress="0.0" />
+      <TextArea fx:id="indexOutput" editable="false" layoutX="25.0" layoutY="175.0" prefHeight="413.0" prefWidth="951.0">
          <cursor>
-            <Cursor
-                    fx:constant="NONE" />
+            <Cursor fx:constant="NONE" />
          </cursor></TextArea>
-      <Button
-              fx:id="stopIndexingBtn"
-              layoutX="184.0"
-              layoutY="105.0"
-              mnemonicParsing="false"
-              onAction="#stopIndexing"
-              prefHeight="25.0"
-              prefWidth="150.0"
-              text="Stop Indexing" />
-      <Button
-              fx:id="clearIndexBtn"
-              layoutX="343.0"
-              layoutY="105.0"
-              mnemonicParsing="false"
-              onAction="#clearIndex"
-              prefHeight="25.0"
-              prefWidth="150.0"
-              text="Clear Index" />
+      <Button fx:id="stopIndexingBtn" layoutX="184.0" layoutY="105.0" mnemonicParsing="false" onAction="#stopIndexing" prefHeight="25.0" prefWidth="150.0" text="Stop Indexing" />
+      <Button fx:id="clearIndexBtn" layoutX="343.0" layoutY="105.0" mnemonicParsing="false" onAction="#clearIndex" prefHeight="25.0" prefWidth="150.0" text="Clear Index" />
    </children>
 </AnchorPane>
