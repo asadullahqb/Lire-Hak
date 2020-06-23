@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EngineControllers.MatchController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" translateY="9.5" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EngineControllers.MatchController">
    <children>
-      <Label id="viewTitle" layoutX="25.0" layoutY="14.0" text="Calculate Image Similarity">
+      <Label id="viewTitle" layoutX="25.0" layoutY="4.5" text="Calculate Image Similarity">
          <font>
             <Font size="18.0" />
          </font>
@@ -33,8 +33,8 @@
             </FXCollections>
          </items>
       </ComboBox>
-      <Label layoutX="40.0" layoutY="499.0" text="Results:" />
-      <TextArea fx:id="Output" layoutX="40.0" layoutY="522.0" prefHeight="57.0" prefWidth="931.0" />
+      <Label layoutX="25.0" layoutY="499.0" text="Results:" />
+      <TextArea fx:id="Output" layoutX="25.0" layoutY="522.0" prefHeight="57.0" prefWidth="951.0" />
       <AnchorPane layoutX="25.0" layoutY="91.0" prefHeight="354.0" prefWidth="468.0" style="-fx-background-color: #EEEEEE;">
          <children>
             <Label layoutX="175.0" layoutY="165.0" text="Drag image here">

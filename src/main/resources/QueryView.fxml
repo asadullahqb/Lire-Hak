@@ -13,9 +13,9 @@
 <?import javafx.scene.layout.TilePane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EngineControllers.QueryController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" translateY="9.5" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="EngineControllers.QueryController">
    <children>
-      <Label id="viewTitle" layoutX="25.0" layoutY="14.0" text="Query Images">
+      <Label id="viewTitle" layoutX="25.0" layoutY="4.5" text="Query Images">
          <font>
             <Font size="18.0" />
          </font>
@@ -34,9 +34,9 @@
       </ComboBox>
       <ProgressBar fx:id="queryProgressBar" layoutX="25.0" layoutY="121.0" prefHeight="25.0" prefWidth="950.0" progress="0.0" />
       <Label fx:id="resultsLabel" layoutX="25.0" layoutY="175.0" text="Results:" visible="false" />
-      <ScrollPane fx:id="scrollPane" layoutX="24.0" layoutY="166.0" prefHeight="420.0" prefWidth="953.0">
+      <ScrollPane fx:id="scrollPane" layoutX="24.0" layoutY="166.0" prefHeight="410.5" prefWidth="953.0">
          <content>
-            <TilePane fx:id="tilePane" alignment="TOP_LEFT" prefHeight="413.0" prefWidth="950.0" tileAlignment="TOP_LEFT">
+            <TilePane fx:id="tilePane" alignment="TOP_LEFT" prefHeight="403.5" prefWidth="950.0" tileAlignment="TOP_LEFT">
                <padding>
                   <Insets left="10.0" />
                </padding></TilePane>
